@@ -1,0 +1,36 @@
+@mixin d-flex($justify: center, $align: center) {
+	display: flex;
+	align-items: $align;
+	justify-content: $justify;
+}
+
+@mixin login-signup-footer {
+	margin: 15px auto 5px;
+	font-size: $small-font;
+	border-top: 1px solid $grey;
+	padding-top: 5px;
+	text-align: center;
+
+	span {
+		color: $red;
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+@mixin change-cursor($cursor: pointer) {
+	cursor: $cursor;
+}
+
+@mixin boxShadow($pressed: false, $top: grey, $bottom: white) {
+	@if $pressed {
+		background: transparent;
+		color: if(lightness($primary-color) > 75%, black, white);
+		box-shadow: inset 4px 3px 2px $top, inset -2px -3px 2px $bottom;
+	} @else {
+		box-shadow: 4px 3px 2px $top, -2px -3px 2px $bottom;
+	}
+}

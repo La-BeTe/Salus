@@ -1,0 +1,27 @@
+.Signup {
+	> h3 {
+		text-align: center;
+		padding: 5px;
+	}
+
+	button[type="submit"] {
+		@include change-cursor;
+		@include boxShadow;
+		width: 70%;
+		padding: 10px 20px;
+		border-radius: 20px;
+		margin: 0 auto;
+		display: block;
+		overflow: hidden;
+		position: relative;
+		font-size: $large-font;
+
+		&:hover {
+			@include boxShadow(true);
+		}
+	}
+
+	&__log--in {
+		@include login-signup-footer;
+	}
+}

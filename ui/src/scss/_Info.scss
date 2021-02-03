@@ -1,0 +1,48 @@
+.Info {
+	position: relative;
+	font-size: $small-font - 0.1rem;
+	top: 0;
+	padding: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: fit-content;
+	background: transparentize($blue, 0.3);
+	color: white;
+	border-radius: 20px;
+	display: flex;
+	animation: slideIn 0.6s;
+	align-items: center;
+	margin-bottom: 20px;
+
+	&#Error {
+		background: transparentize($red, 0.3);
+	}
+
+	&.hide {
+		display: none;
+	}
+
+	> p span {
+		display: block;
+		margin-top: 5px;
+		margin-right: 10px;
+	}
+
+	> span {
+		@include change-cursor;
+		display: block;
+		margin-left: 10px;
+		font-size: $small-font + 0.1rem;
+		text-decoration: underline;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		top: -20px;
+	}
+	to {
+		top: 0;
+	}
+}

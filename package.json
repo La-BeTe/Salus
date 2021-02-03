@@ -1,0 +1,22 @@
+{
+	"name": "mern-authenticator-app",
+	"version": "1.0.0",
+	"description": "MERN Authenticator App",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"deploy": "git push",
+		"build": "cd ./ui && npm install && npm run build && cd ../server && npm install && cd ..",
+		"start": "cd ./server && npm run start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/La-BeTe/MERN-Authenticator-App.git"
+	},
+	"author": "La-BeTe",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/La-BeTe/MERN-Authenticator-App/issues"
+	},
+	"homepage": "https://github.com/La-BeTe/MERN-Authenticator-App#readme"
+}

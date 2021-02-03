@@ -1,0 +1,96 @@
+.Login {
+	position: relative;
+	> h3 {
+		text-align: center;
+		padding: 10px;
+	}
+
+	&__social--icons {
+		@include d-flex(space-around);
+		margin: 10px auto;
+
+		> div {
+			@include d-flex;
+			padding: 5px;
+			transition: transform 0.5s;
+
+			&:hover {
+				transform: scale(1.2);
+			}
+
+			> a {
+				width: 30px;
+				font-size: $small-font;
+				color: black;
+				text-decoration: none;
+			}
+
+			img {
+				width: 100%;
+			}
+		}
+	}
+
+	&__separator {
+		@include d-flex;
+		font-size: $small-font;
+		position: relative;
+		text-align: center;
+		margin: 10px auto 20px;
+
+		&::before {
+			content: "";
+			background: $grey;
+			height: 1px;
+			flex: 1;
+		}
+
+		&::after {
+			content: "";
+			background: $grey;
+			height: 1px;
+			flex: 1;
+		}
+	}
+
+	> form > button[type="submit"] {
+		@include change-cursor;
+		background-color: $blue;
+		padding: 15px 50px;
+		display: block;
+		margin: 10px auto;
+		color: white;
+		font-size: $large-font;
+		border-radius: 40px;
+		width: 80%;
+
+		&:hover {
+			@include boxShadow(true);
+		}
+	}
+
+	&__remember--me {
+		@include d-flex;
+		font-size: $small-font;
+		width: 100%;
+
+		input[type="checkbox"] {
+			width: 0.8rem;
+			margin-right: 5px;
+		}
+	}
+
+	&__forgot--password {
+		@include d-flex;
+		@include change-cursor;
+		font-size: $small-font;
+		text-decoration: underline;
+		color: $red;
+		font-weight: bold;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	&__sign--up {
+		@include login-signup-footer;
+	}
+}

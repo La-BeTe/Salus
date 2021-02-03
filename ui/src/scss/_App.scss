@@ -1,0 +1,13 @@
+.App {
+	width: 80%;
+	max-width: 400px;
+	border-radius: 40px;
+	padding: 30px;
+	background-color: $primary-color;
+	box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.705),
+		5px 5px 15px rgba(0, 0, 0, 0.178);
+
+	.react-swipeable-view-container > div {
+		@include d-flex;
+	}
+}
