@@ -14,7 +14,7 @@ module.exports = {
 	entry: "./src/index.js",
 	output: {
 		filename: "main.js",
-		path: resolve(__dirname, "public", "assets")
+		path: resolve(__dirname, "public")
 	},
 	mode: inProdMode ? "production" : "development",
 	resolve: {

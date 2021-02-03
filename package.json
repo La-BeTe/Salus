@@ -5,9 +5,9 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"deploy": "git push",
-		"build": "cd ./ui && npm install && npm run build && cd ../server && npm install && cd ..",
-		"start": "cd ./server && npm run start"
+		"deploy": "cd ./ui && npm run build:prod && cd .. && git push",
+		"build": "cd ./ui && npm install && cd ../server && npm install && cd ..",
+		"start": "cd ./server && npm start"
 	},
 	"repository": {
 		"type": "git",
