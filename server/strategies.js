@@ -159,7 +159,7 @@ module.exports.RememberMeStrategy = function () {
 		},
 		async function (user, done) {
 			try {
-				const rememberMeToken = cryptoRandomString(20);
+				const rememberMeToken = cryptoRandomString({ length: 20 });
 				await User.findOneAndUpdate(
 					{ email: user.email },
 					{ rememberMeToken }

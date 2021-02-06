@@ -47,7 +47,9 @@ module.exports.logIn = function (req, res, next) {
 						const userFromDB = await User.findOne({
 							email: user.email
 						});
-						userFromDB.rememberMeToken = cryptoRandomString(20);
+						userFromDB.rememberMeToken = cryptoRandomString({
+							length: 20
+						});
 						await userFromDB.save();
 						res.cookie(
 							process.env.REMEMBER_ME_COOKIE_NAME,
