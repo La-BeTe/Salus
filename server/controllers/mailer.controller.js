@@ -10,7 +10,7 @@ let mailGenerator = new MailGen({
 });
 
 let transport = nodemailer.createTransport({
-	host: "smtp.hostinger.com",
+	host: process.env.MAILER_HOST,
 	port: 587,
 	auth: {
 		user: process.env.MAILER_USERNAME,

@@ -25,6 +25,7 @@ module.exports.GoogleStrategy = () => {
 						authType: "google",
 						oAuthId: profile.id,
 						name: profile.displayName,
+						// Google will probably always provide an email
 						email: profile.emails[0].value
 					});
 					return done(null, newUser);
@@ -97,7 +98,8 @@ module.exports.FBStrategy = () => {
 						authType: "facebook",
 						oAuthId: profile.id,
 						name: profile.displayName,
-						email: profile.email
+						// Temp email if facebook provides no email
+						email: profile.email || `${profile.id}@facebook.com`
 					});
 					return done(null, newUser);
 				} else {
@@ -135,6 +137,9 @@ module.exports.LocalStrategy = () => {
 					if (isPasswordValid) done(null, user);
 					else
 						done(null, false, {
+							// This is a personal project,
+							// so I might as well give hints if password is incorrect
+							// even if that is not very secure 😈
 							message: "Your password is incorrect"
 						});
 				}
