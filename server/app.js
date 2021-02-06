@@ -23,6 +23,7 @@ const app = express();
 // App Configuration
 app.set("views", resolve(__dirname, "views"));
 app.set("view engine", "ejs");
+if (process.env.NODE_ENV === "production") app.set("trust proxy", 1);
 
 // DB Connection Setup
 mongoose.connect(process.env.MONGODB_URI, {

@@ -124,6 +124,10 @@ module.exports.LocalStrategy = () => {
 						message: `Email "${email}" is yet to sign up`
 					});
 				else {
+					if (user.authType !== "email")
+						return done(null, false, {
+							message: `Email "${email}" already signed up with ${user.authType}`
+						});
 					const isPasswordValid = await bcrypt.compare(
 						password,
 						user.password
