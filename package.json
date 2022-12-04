@@ -1,22 +1,25 @@
 {
-	"name": "mern-authenticator-app",
-	"version": "1.0.0",
-	"description": "MERN Authenticator App",
+	"name": "salus",
+	"version": "2.0.0",
+	"description": "Salus is a simple login, signup and account page allowing Google, Facebook, Twitter and Email authentication. It also supports Forgot Password and Change Password functionalities.",
 	"main": "index.js",
+	"engines": {
+		"node": "<= 14.0.0"
+	},
 	"scripts": {
+		"start": "cd ./server && npm start",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"deploy": "git push",
-		"build": "cd ./ui && npm install && cd ../server && npm install && cd ..",
-		"start": "cd ./server && npm start"
+		"start:dev": "cd ./ui && npm run build:dev && cd ../server && npm run dev",
+		"build": "cd ./ui && npm install  --production=false && npm run build:prod && cd ../server && npm install && cd .."
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/La-BeTe/MERN-Authenticator-App.git"
+		"url": "git+https://github.com/La-BeTe/Salus.git"
 	},
 	"author": "La-BeTe",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/La-BeTe/MERN-Authenticator-App/issues"
+		"url": "https://github.com/La-BeTe/Salus/issues"
 	},
-	"homepage": "https://github.com/La-BeTe/MERN-Authenticator-App#readme"
+	"homepage": "https://github.com/La-BeTe/Salus#readme"
 }

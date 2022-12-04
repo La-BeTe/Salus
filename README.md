@@ -1,10 +1,10 @@
-# MERN Authenticator App
+# Salus
 
-This app is a simple login, signup and account page with **Google, Facebook, Twitter and Email** authentication. It also supports _Forgot Password, Change Password_ functionalities.
+Salus is a simple login, signup and account page allowing **Google, Facebook, Twitter and Email** authentication. It also supports _Forgot Password_ and _Change Password_ functionalities.
 
 ### Live Demo
 
-LIVE Demo is available [here](https://lbt-mern-auth-app.herokuapp.com)
+LIVE Demo is available [here](https://salus.labete.dev)
 
 ### Technologies Used
 

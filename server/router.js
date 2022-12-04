@@ -1,19 +1,20 @@
 const router = require("express").Router();
-const { errorHandler } = require("./controllers/errors.controller");
-const validator = require("./controllers/validator.controller");
+
+const validator = require("./middlewares/validator");
+const { errorHandler } = require("./controllers/errors");
 const {
-	signUp,
 	logIn,
 	logOut,
+	signUp,
+	resetPassword,
 	changePassword,
-	getChangePasswordAfterResetPage,
 	changePasswordAfterReset,
-	resetPassword
-} = require("./controllers/users.controller");
+	getChangePasswordAfterResetPage,
+} = require("./controllers/users");
 const {
 	redirectToProvider,
 	handleProviderVerification
-} = require("./controllers/oauth.controller");
+} = require("./controllers/oauth");
 
 //OAuth login renders index.ejs with the user or error is passed in res.locals
 router.get("/auth/:provider", redirectToProvider);
@@ -22,10 +23,10 @@ router.get("/auth/:provider/redirect", handleProviderVerification);
 // Email signup and login returns data as res.json calls as frontend is an SPA
 router.post(
 	"/signup",
-	validator("email", "password", "confirm-password", "name"),
+	validator("name", "email", "password", "confirm-password"),
 	signUp
 );
-router.post("/login", validator("email", "password", "remember-me"), logIn);
+router.post("/login", validator("email", "password"), logIn);
 
 // Logout route handles both oauth and email authenticated users
 router.get("/logout", logOut);
@@ -50,7 +51,7 @@ router.post("/reset-password", validator("email"), resetPassword);
 router.get("/", (_, res) => res.render("index"));
 
 // Catch all other GET requests and redirect to /
-router.get("*", (_, res, __) => res.redirect("/"));
+router.get("*", (_, res) => res.redirect("/"));
 
 // Error Handler
 router.use(errorHandler);

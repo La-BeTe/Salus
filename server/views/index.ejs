@@ -6,11 +6,11 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0, user-scalable=no"
 		/>
-		<title>MERN Authenticator App</title>
+		<title><%= appName _%></title>
 		<link rel="stylesheet" href="/styles.css" />
 		<script>
-			window.USER = `<%- JSON.stringify(user) _%>`;
 			window.ERROR = `<%= error _%>`;
+			window.USER = `<%- JSON.stringify(user) _%>`;
 		</script>
 	</head>
 	<body>

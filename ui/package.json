@@ -8,7 +8,6 @@
 		"@babel/preset-env": "^7.12.11",
 		"@babel/preset-react": "^7.12.10",
 		"babel-loader": "^8.2.2",
-		"cross-env": "^7.0.3",
 		"css-loader": "^5.0.1",
 		"mini-css-extract-plugin": "^1.3.4",
 		"sass": "^1.32.4",
@@ -28,8 +27,8 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build:dev": "webpack -w",
-		"build:prod": "cross-env NODE_ENV=production webpack"
+		"build:dev": "webpack",
+		"build:prod": "NODE_ENV=production webpack"
 	},
 	"author": "La-BeTe",
 	"license": "ISC"

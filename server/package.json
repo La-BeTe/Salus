@@ -1,11 +1,11 @@
 {
-	"name": "mern-authenticator-app-server",
-	"version": "1.0.0",
-	"description": "MERN Authenticator App Server",
+	"name": "salus-server",
+	"version": "2.0.0",
+	"description": "Salus App Server",
 	"main": "app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start:dev": "nodemon app.js",
+		"dev": "nodemon app.js",
 		"start": "node app.js"
 	},
 	"author": "La-BeTe",
@@ -25,12 +25,9 @@
 		"passport-google-oauth": "^2.0.0",
 		"passport-local": "^1.0.0",
 		"passport-remember-me": "0.0.1",
-		"passport-twitter": "^1.0.4"
+		"passport-twitter": "^0.1.5"
 	},
 	"devDependencies": {
-		"eslint": "^7.17.0",
-		"eslint-config-airbnb-base": "^14.2.1",
-		"eslint-plugin-import": "^2.22.1",
 		"nodemon": "^2.0.7"
 	}
 }
