@@ -13,5 +13,5 @@ LIVE Demo is available [here](https://salus.labete.dev)
 -   NodeJS
 -   MongoDB
 -   ExpressJS
--   NodeMailer
+-   Nodemailer
 -   PassportJS

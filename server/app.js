@@ -14,7 +14,7 @@ const app = express();
 // App Configuration
 app.set("views", resolve(__dirname, "views"));
 app.set("view engine", "ejs");
-if(process.env.NODE_ENV !== "dev") app.set("trust proxy", 1);
+app.set("trust proxy", Number(process.env.TRUST_PROXY_SETTING) || 0);
 
 // DB Connection Setup
 mongoose.connect(process.env.MONGODB_URI, {
@@ -36,8 +36,7 @@ app.use(session({
 	name: process.env.COOKIE_NAME,
 	secret: process.env.SESSION_SECRET,
 	cookie: {
-		maxAge: 30 * 60 * 1000,
-		secure: process.env.NODE_ENV !== "dev"
+		maxAge: 30 * 60 * 1000
 	}
 }));
 

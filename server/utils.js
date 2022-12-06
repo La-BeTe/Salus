@@ -13,13 +13,13 @@ const mailTransport = nodemailer.createTransport({
 
 module.exports.generatePasswordResetEmail = function(user){
     const mailGenerator = new MailGen({
-        theme: "cerberus",
+        theme: process.env.PASSWORD_RESET_MAIL_THEME || "cerberus",
         product: {
             // Th produce's name is an empty string so the app name doesn't 
             // show up at the top of the mail
             name: " ",
             link: process.env.SITE_URL,
-            logo: `${process.env.SITE_URL}/favicon.ico`,
+            logo: `${process.env.SITE_URL}/logo-120.png`,
             copyright: `© ${new Date().getFullYear()} <a href="${process.env.SITE_URL}">${String(process.env.APP_NAME).toUpperCase()}</a>.<br />All rights reserved.`
         }
     });
@@ -35,7 +35,7 @@ module.exports.generatePasswordResetEmail = function(user){
 				instructions: "Click below to reset your password:",
 				button: {
                     fallback: true,
-					color: "#0459AC",
+					color: "#ca0a1c",
 					text: "Reset your password",
 					link: `${process.env.SITE_URL}/reset-password/${encodeURIComponent(user.resetToken)}`
 				}
