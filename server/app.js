@@ -35,9 +35,7 @@ app.use(session({
 	saveUninitialized: false,
 	name: process.env.COOKIE_NAME,
 	secret: process.env.SESSION_SECRET,
-	cookie: {
-		maxAge: 30 * 60 * 1000
-	}
+	cookie: { maxAge: 30 * 60 * 1000 }
 }));
 
 app.use(preAuthSetup);

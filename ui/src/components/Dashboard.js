@@ -1,5 +1,4 @@
 import React from "react";
-import useFetch from "../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faArrowRight,
@@ -7,34 +6,35 @@ import {
 	faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 
-const Dashboard = ({ switchPage, user, setUser }) => {
-	const { status, myFetch } = useFetch();
+import useFetch from "../hooks/useFetch";
 
-	function handleLogout() {
-		if (status.loading) return;
-		myFetch("/logout", {}, "GET")
-			.then(() => {
-				setUser({});
-				window.USER = JSON.stringify({});
-			})
-			.catch(() => {});
+const Dashboard = ({ switchPage, user, logOutUser, setInfo }) => {
+	const [ isLoading, _fetch ] = useFetch();
+	const userAuthType = String(user.authType)[0].toUpperCase() + String(user.authType).slice(1);
+
+	async function handleLogout() {
+		if(isLoading) return;
+		const response = await _fetch("/logout", {}, "GET");
+		if(response?.ok) logOutUser();
+		else setInfo(response.error, true);
 	}
+
 	return (
 		<div className="Dashboard">
 			<h3>Hey {user.name}</h3>
-			<p>You have successfully signed in with {user.authType}</p>
+			<p>You have successfully signed in with your {userAuthType} account.</p>
 			<div className="Dashboard__actions">
-				{user.authType === "email" && (
-					<p onClick={() => switchPage(3)}>
+				{userAuthType === "Email" && (
+					<p onClick={() => switchPage("changepassword")}>
 						<FontAwesomeIcon icon={faArrowLeft} />
 						Change Password
 					</p>
 				)}
 				<p onClick={handleLogout}>
-					Sign{status.loading && "ing"} Out
+					Sign{isLoading && "ing"} Out
 					<FontAwesomeIcon
-						icon={status.loading ? faSpinner : faArrowRight}
-						spin={status.loading}
+						icon={isLoading ? faSpinner : faArrowRight}
+						spin={isLoading}
 					/>
 				</p>
 			</div>

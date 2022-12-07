@@ -1,45 +1,33 @@
-import React, { useState, useRef } from "react";
-import useValidator from "../hooks/useValidator";
-import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
 
 // propsFromParent is the original props from parent containing props
 // that should not be passed to the DOM
 // But props which is derived from propsFromParent is passed directly to the DOM
 // so unallowed DOM attributes are removed from props but not propsFromParent
 const Input = (propsFromParent) => {
-	const {
-		error: validationError,
-		setInput: setValidatorInput
-	} = useValidator(propsFromParent);
-	const props = { ...propsFromParent };
 	const [showPassword, setShowPassword] = useState(false);
-	const [input, setInput] = useState("");
-	const isPassword = useRef(props.type === "password");
+
+	const isPasswordInput = propsFromParent.type === "password";
+	const props = { 
+		...propsFromParent, 
+		value: (propsFromParent.input?.value || ""),
+		// Change props.type if initially a password so as to create
+		// the ability to switch inputs with type=password from text to password
+		type: (isPasswordInput && showPassword) ? "text" : propsFromParent.type,
+	};
 
 	// Deleting props that are not needed in the DOM
 	delete props.icon;
+	delete props.input;
 	delete props.setRef;
 
-	// Change props.type if initially a password so as to create
-	// the ability to switch inputs with type=password from text to password
-	props.type =
-		isPassword.current && showPassword
-			? "text"
-			: !isPassword.current
-			? props.type
-			: "password";
-
-	function changeShowPassword() {
-		setShowPassword(!showPassword);
-	}
-	function handleInputChange(e) {
-		if (propsFromParent.setRef) propsFromParent.setRef(e.target.value);
-		setValidatorInput(e.target.value);
-		setInput(e.target.value);
+	async function handleInputChange(ev){
+		propsFromParent.setRef && propsFromParent.setRef(ev.target.value);
 	}
 
-	if (props.type === "submit") {
+	if(props.type === "submit"){
 		return (
 			<button type="submit">
 				{props.loading ? (
@@ -56,16 +44,21 @@ const Input = (propsFromParent) => {
 			{!!propsFromParent.icon && (
 				<FontAwesome icon={propsFromParent.icon} />
 			)}
-			<input value={input} onChange={handleInputChange} {...props} />
-			{isPassword.current && (
+			<input 
+				{...props} 
+				onChange={handleInputChange} 
+			/>
+			{isPasswordInput && (
 				<FontAwesome
-					onClick={changeShowPassword}
-					icon={showPassword ? faEyeSlash : faEye}
-					onPointerDown={(e) => e.preventDefault()}
+				icon={showPassword ? faEyeSlash : faEye}
+				onClick={() => setShowPassword(!showPassword)}
+					onPointerDown={(ev) => ev.preventDefault()}
 				/>
 			)}
-			{validationError && (
-				<span className="validationError">{validationError}</span>
+			{!!propsFromParent.input?.error && (
+				<span className="validationError">
+					{propsFromParent.input.error}
+				</span>
 			)}
 		</div>
 	);

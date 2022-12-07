@@ -1,7 +1,7 @@
 {
-	"name": "mern-authenticator-app-ui",
-	"version": "1.0.0",
-	"description": "Frontend for MERN Authenticator App",
+	"name": "salus-ui",
+	"version": "2.0.0",
+	"description": "Salus App Fontend",
 	"main": "src/index.js",
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

@@ -1,12 +1,16 @@
 .Dashboard {
 	> h3 {
+		padding: 10px;
 		text-align: center;
+		font-size: $larger-font;
 	}
+
 	> p {
 		margin: 20px;
 		text-align: center;
 		font-size: $small-font + 0.1rem;
 	}
+
 	&__actions {
 		display: flex;
 		flex-direction: column;
@@ -16,6 +20,7 @@
 		svg {
 			margin: 0 10px;
 		}
+		
 		> p {
 			@include change-cursor;
 			margin: 5px;

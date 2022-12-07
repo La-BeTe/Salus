@@ -1,39 +1,41 @@
-import React, { useRef } from "react";
-import useFetch from "../hooks/useFetch";
-import Input from "./Input";
-import Info from "./Info";
+import React, { useState } from "react";
 import { faEnvelope, faLock, faCog } from "@fortawesome/free-solid-svg-icons";
+
+import Input from "./Input";
+import { validator } from "../utils";
+import useFetch from "../hooks/useFetch";
 import GoogleLogo from "../svg/google.svg";
-import FacebookLogo from "../svg/facebook.svg";
 import TwitterLogo from "../svg/twitter.svg";
+import FacebookLogo from "../svg/facebook.svg";
 
-const Login = ({ switchPage, setUser }) => {
-	const emailInputRef = useRef();
-	const passwordInputRef = useRef();
-	const rememberMeRef = useRef();
-	const { status, myFetch, clearError } = useFetch();
+const Login = ({ switchPage, logInUser, setInfo }) => {
+	const [ isLoading, _fetch ] = useFetch();
+	const [ inputs, setInputs ] = useState({});
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		myFetch(
-			"/login",
-			{
-				email: emailInputRef.current,
-				password: passwordInputRef.current,
-				"remember-me": rememberMeRef.current.checked
-			},
-			"POST"
-		)
-			.then((result) => {
-				setUser(result.user);
-			})
-			.catch(() => {});
+	async function handleSubmit(ev){
+		ev.preventDefault();
+		setInfo();
+		const response = await _fetch("/login", inputs, "POST");
+		if(response?.ok){
+			setInputs({});
+			logInUser(response.user);
+		}else setInfo(response.error, true);
 	}
+
+	function updateInputs(name){
+		return async function(value){
+			setInputs({
+				...inputs,
+				[name]: {
+					value,
+					error: await validator(name, value, inputs)
+				}
+			})
+		}
+	}
+
 	return (
 		<div className="Login">
-			{status.error && (
-				<Info error info={status.error} clearInfo={clearError} />
-			)}
 			<h3>Log In</h3>
 			<div className="Login__social--icons">
 				<div>
@@ -60,34 +62,38 @@ const Login = ({ switchPage, setUser }) => {
 				<Input
 					type="email"
 					name="email"
-					placeholder="Email"
 					icon={faEnvelope}
-					setRef={(val) => (emailInputRef.current = val)}
+					placeholder="Email"
+					input={inputs.email}
+					setRef={updateInputs("email")}
 				/>
 				<Input
 					icon={faLock}
 					type="password"
 					name="password"
 					placeholder="Password"
-					setRef={(val) => (passwordInputRef.current = val)}
+					input={inputs.password}
+					setRef={updateInputs("password")}
 				/>
 				<label className="Login__remember--me">
-					<input type="checkbox" ref={rememberMeRef} /> Keep me logged
-					in
+					<input 
+						type="checkbox" 
+						onChange={(ev) => updateInputs("remember-me")(ev.target.checked)} 
+					/> Keep me logged in
 				</label>
-				<Input loading={status.loading} icon={faCog} type="submit">
+				<Input loading={isLoading} icon={faCog} type="submit">
 					Log In
 				</Input>
 				<p
 					className="Login__forgot--password"
-					onClick={() => switchPage(2)}
+					onClick={() => switchPage("forgotpassword")}
 				>
 					Forgot password?
 				</p>
 			</form>
 			<p className="Login__sign--up">
 				Don't have an account?{" "}
-				<span onClick={() => switchPage(0)}>Sign up</span>
+				<span onClick={() => switchPage("signup")}>Sign up</span>
 			</p>
 		</div>
 	);

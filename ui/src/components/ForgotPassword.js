@@ -1,50 +1,60 @@
-import React, { useState, useRef } from "react";
-import Input from "./Input";
-import Info from "./Info";
-import useFetch from "../hooks/useFetch";
+import React, { useState } from "react";
 import { faEnvelopeOpen, faCog } from "@fortawesome/free-solid-svg-icons";
 
-const ForgotPassword = ({ switchPage }) => {
-	const emailRef = useRef();
-	const [info, setInfo] = useState("");
-	const { status, myFetch, clearError } = useFetch();
+import Input from "./Input";
+import { validator } from "../utils";
+import useFetch from "../hooks/useFetch";
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		setInfo("");
-		myFetch("/reset-password", { email: emailRef.current }, "POST")
-			.then(() => {
-				setInfo("A reset link has been sent to your email");
-			})
-			.catch(() => {});
+const ForgotPassword = ({ switchPage, setInfo }) => {
+	const [ isLoading, _fetch ] = useFetch();
+	const [ inputs, setInputs ] = useState({});
+
+	async function handleSubmit(ev) {
+		ev.preventDefault();
+		setInfo();
+		const response = await _fetch("/reset-password", inputs, "POST");
+		if(response?.ok){
+			setInputs({});
+			setInfo("A reset link has been sent to your email.");
+		}else setInfo(response.error, true);
 	}
+
+	function updateInputs(name){
+		return async function(value){
+			setInputs({
+				...inputs,
+				[name]: {
+					value,
+					error: await validator(name, value, inputs)
+				}
+			})
+		}
+	}
+
 	return (
 		<div className="ForgotPassword">
-			{status.error && (
-				<Info error info={status.error} clearInfo={clearError} />
-			)}
-			{info && <Info info={info} clearInfo={() => setInfo("")} />}
 			<h3>Can't remember your password?</h3>
-			<p>Enter your email and we'll reset your password</p>
+			<p>Enter your email below and we'll reset your password</p>
 			<form onSubmit={handleSubmit}>
 				<Input
 					type="email"
 					name="email"
 					placeholder="Email"
+					input={inputs.email}
 					icon={faEnvelopeOpen}
-					setRef={(val) => (emailRef.current = val)}
+					setRef={updateInputs("email")}
 				/>
-				<Input type="submit" icon={faCog} loading={status.loading}>
+				<Input type="submit" icon={faCog} loading={isLoading}>
 					Reset Password
 				</Input>
 			</form>
 			<p className="ForgotPassword__sign--up">
 				Don't have an account?{" "}
-				<span onClick={() => switchPage(0)}>Sign up</span>
+				<span onClick={() => switchPage("signup")}>Sign up</span>
 			</p>
 			<p className="ForgotPassword__log--in">
 				Already registered?{" "}
-				<span onClick={() => switchPage(1)}>Log in</span>
+				<span onClick={() => switchPage("login")}>Log in</span>
 			</p>
 		</div>
 	);

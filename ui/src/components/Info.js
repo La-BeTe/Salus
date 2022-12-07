@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 
-const Error = ({ error, clearInfo, info }) => {
+const Info = ({ error, info }) => {
 	const [hidden, setHidden] = useState(false);
+
 	useEffect(() => {
 		setHidden(false);
 	}, [info]);
+
 	function hide() {
 		setHidden(true);
-		clearInfo && clearInfo();
 	}
+
+	if(!info) return (<></>)
+
 	return (
 		<div
 			id={error ? "Error" : ""}
@@ -24,4 +28,4 @@ const Error = ({ error, clearInfo, info }) => {
 	);
 };
 
-export default Error;
+export default Info;

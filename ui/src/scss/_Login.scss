@@ -1,8 +1,9 @@
 .Login {
 	position: relative;
 	> h3 {
-		text-align: center;
 		padding: 10px;
+		text-align: center;
+		font-size: $larger-font;
 	}
 
 	&__social--icons {
@@ -12,10 +13,11 @@
 		> div {
 			@include d-flex;
 			padding: 5px;
+			transform: scale(1.2);
 			transition: transform 0.5s;
 
 			&:hover {
-				transform: scale(1.2);
+				transform: scale(1.6);
 			}
 
 			> a {
@@ -55,14 +57,15 @@
 
 	> form > button[type="submit"] {
 		@include change-cursor;
-		background-color: $blue;
+		@include boxShadow;
 		padding: 15px 50px;
 		display: block;
 		margin: 10px auto;
-		color: white;
 		font-size: $large-font;
 		border-radius: 40px;
 		width: 80%;
+		color: black;
+		background: none;
 
 		&:hover {
 			@include boxShadow(true);

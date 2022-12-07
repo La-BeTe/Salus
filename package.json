@@ -10,7 +10,7 @@
 		"start": "cd ./server && npm start",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start:dev": "cd ./ui && npm run build:dev && cd ../server && npm run dev",
-		"build": "cd ./ui && npm install  --production=false && npm run build:prod && cd ../server && npm install && cd .."
+		"build": "cd ./ui && npm install --production=false && npm run build:prod && cd ../server && npm install && cd .."
 	},
 	"repository": {
 		"type": "git",

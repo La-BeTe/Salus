@@ -1,12 +1,12 @@
 .Signup {
 	> h3 {
+		padding: 10px;
 		text-align: center;
-		padding: 5px;
+		font-size: $larger-font;
 	}
 
 	button[type="submit"] {
 		@include change-cursor;
-		@include boxShadow;
 		width: 70%;
 		padding: 10px 20px;
 		border-radius: 20px;
@@ -15,6 +15,9 @@
 		overflow: hidden;
 		position: relative;
 		font-size: $large-font;
+		color: white;
+		background: $green;
+		box-shadow: none;
 
 		&:hover {
 			@include boxShadow(true);

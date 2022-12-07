@@ -1,4 +1,4 @@
-class KnownError extends Error {
+class KnownError extends Error{
 	constructor(message, status) {
 		message = String(message);
 		if(!message.endsWith(".")) message += ".";
@@ -7,7 +7,7 @@ class KnownError extends Error {
 	}
 }
 
-function errorHandler(err, req, res, __) {
+function errorHandler(err, req, res, __){
 	let error = err.message;
 	if(err instanceof KnownError && process.env.LOG_KNOWN_ERRORS){
 		console.log(err.message)

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import "regenerator-runtime/runtime";
+import { useState } from "react";
 
-function useMyFetch() {
-	const [status, setStatus] = useState({ error: "", loading: false });
+import { payloadNormalizer } from "../utils";
 
-	async function myFetch(url, body, method) {
-		setStatus({ error: "", loading: true });
+function useFetch() {
+	const [isLoading, setIsLoading] = useState(false);
+
+	async function _fetch(url, body, method){
+		let jsonResponse;
+		setIsLoading(true);
 		try {
 			const params = {
 				method,
@@ -14,28 +16,22 @@ function useMyFetch() {
 					Accept: "application/json"
 				}
 			};
-			if (method !== "GET") params.body = JSON.stringify(body);
+			if(method !== "GET") params.body = JSON.stringify(payloadNormalizer(body));
 			const response = await fetch(url, params);
-			const jsonResponse = await response.json();
-			if (!jsonResponse.ok) throw jsonResponse.error;
-			setStatus({ error: "", loading: false });
-			return jsonResponse;
-		} catch (e) {
-			console.log(e);
-			setStatus({
-				loading: false,
-				error: typeof e === "string" ? e : "Failed to complete request"
-			});
-			// Throw error so the Promise returned rejects 👎
-			throw e;
+			jsonResponse = await response.json();
+			if(!jsonResponse?.ok) throw new Error(jsonResponse?.error);
+		}catch(err){
+			console.log(err);
+			jsonResponse = {
+				ok: false,
+				error: err?.message || "Failed to complete request."
+			}
 		}
+		setIsLoading(false);
+		return jsonResponse;
 	}
 
-	function clearError() {
-		setStatus({ ...status, error: "" });
-	}
-
-	return { status, myFetch, clearError };
+	return [ isLoading, _fetch ];
 }
 
-export default useMyFetch;
+export default useFetch;
